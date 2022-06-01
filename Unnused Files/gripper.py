@@ -42,3 +42,8 @@ def closeGripper(clientid):
     gripperFunction(clientid, 1, g.j1, g.j2, g.p1, g.p2)
     time.sleep(0.15) #Alter the time value to account for differently sized objects to grip
     pauseGripper(clientid, g.j1, g.j2)
+
+def openGripper(clientid):
+    gripperFunction(clientid, 0, g.j1, g.j2, g.p1, g.p2)
+    time.sleep(0.15) #Alter the time value to account for differently sized objects to grip
+    pauseGripper(clientid, g.j1, g.j2)

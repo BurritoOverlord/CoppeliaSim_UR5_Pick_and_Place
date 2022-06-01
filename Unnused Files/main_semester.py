@@ -1,12 +1,8 @@
-
-import threading
 import sim
 import globalvariables_semester as g
 import time
 import gripper as grip
 import moveL as mL
-import datetime
-
 
 # Initialization
 

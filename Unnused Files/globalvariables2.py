@@ -6,7 +6,34 @@ import sim
 import numpy as np
 import time
 
+#Table class that represents one section of one deep-fryer (in the CoppeliaSim scene, this is one-half of one of the red tables)
+class Table:
 
+    #Constructor method
+    def __init__(self):
+        self.empty = True #boolean empty or not
+        self.type = "" #type of chicken (bone or boneless)
+
+    #Occupy method
+    def occupy(self):
+        self.empty = False
+
+    #Empty method
+    def vacate(self):
+        self.empty = True
+
+    #Starting the timer at shake start method
+    def startTimer(self):
+        self.startTime = time.time()
+
+    #Ending the timer at shake end method
+    def endTimer(self):
+        self.endTime = time.time()
+
+t1 = Table()
+tableArr = [t1] #Table array representing the four available spaces in the deep fryer system
+#Global variables representing how many shakes each basket has gone through
+t1NumOfShakes = 0
 kFinal = 0
 
 
@@ -18,15 +45,13 @@ clientID = sim.simxStart('127.0.0.1', 19990, True, True, 5000, 5)  #Server IP, P
                                                                    #commThreadCycleinMs (usually set as 5)
 
 def connectionMessage(clientid):
-    '''
-    #################################### Setup #####################################
-    '''
-    #sim.simxFinish(-1)  # just in case, close all opened connections ----- IF I NEED to reset sandboxscript on Vrep
-    if clientid != -1:
-        print('Connected to remote API server')
+    if (clientid != -1):
+        print("Connected to remote API server")
     else:
-        print('connection not successful')
-        sys.exit("could not connect")
+        print("Connection unsuccessful :(. Ensure simulation is already running + correct files in directory.")
+        sys.exit()
+
+    time.sleep(2)
 
 PI = np.pi #For move_L calculations
 
@@ -34,7 +59,8 @@ PI = np.pi #For move_L calculations
 errorCode, target = sim.simxGetObjectHandle(clientID, 'target', sim.simx_opmode_blocking) #target dummy
 errorCode, j1 = sim.simxGetObjectHandle(clientID, 'ROBOTIQ_85_active1', sim.simx_opmode_blocking) #gripper joint 1
 errorCode, j2 = sim.simxGetObjectHandle(clientID, 'ROBOTIQ_85_active2', sim.simx_opmode_blocking) #gripper joint 2
-errorCode, connector = sim.simxGetObjectHandle(clientID, 'ROBOTIQ_85_attachPoint', sim.simx_opmode_blocking) #gripper connect point
+errorCode, connector = sim.simxGetObjectHandle(clientID, 'ROBOTIQ_85_attachPoint',
+                                               sim.simx_opmode_blocking) #gripper connect point
 
 #Obtaining joint positions for the gripper to close & open
 errorCode, p1 = sim.simxGetJointPosition(clientID, j1, sim.simx_opmode_streaming)
