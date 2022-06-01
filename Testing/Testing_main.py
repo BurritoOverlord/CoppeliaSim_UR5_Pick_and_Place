@@ -18,7 +18,7 @@ g.connectionMessage(g.clientID)  # Printing out a successful/unsuccessful remote
 def function():
     initCups() #Spawning a non-dynamic basket to the 'batter and breading machine' platform
 
-    #grabCupFunc(g.clientID, 1, "")  # Grab Cup "" from its position
+    grabCupFunc(g.clientID, 1, "")  # Grab Cup "" from its position
 
     """
     moveBasketFunc(g.clientID, 1, "") #Move basket from conveyor -> table x
@@ -30,29 +30,31 @@ def initCups():
     errorCode, cupH = sim.simxGetObjectHandle(g.clientID, 'Cup', sim.simx_opmode_blocking)
     sim.simxSetObjectPosition(g.clientID, cupH, -1, g.basket_spawn, sim.simx_opmode_oneshot)
 
-    time.sleep(2)
-    errorCode, connector = sim.simxGetObjectHandle(g.clientID, 'ROBOTIQ_85_attachPoint', sim.simx_opmode_blocking)  # gripper connect point
-
     grip.openGripperAtStart(g.clientID, g.j1, g.j2, g.p1, g.p2) #Opens gripper at the very beginning of moving the basket
     time.sleep(2)
 
-    time.sleep(2)
-    mL.move_L(g.clientID, g.target, g.initial_pos, g.kFinal) #Go to initial Position
-    time.sleep(0.5)
-    mL.move_L(g.clientID, g.target, g.b1_return_pos, g.kFinal)  # Go to initial Position
 
 def grabCupFunc(clientid, targetPosition, arrIndex):
-    # Get proper Cup handle based on the ID or the ArUco markers
-    errorCode, cupH = sim.simxGetObjectHandle(g.clientID, 'Cup' + arrIndex, sim.simx_opmode_blocking)
+    errorCode, cupH = sim.simxGetObjectHandle(g.clientID, 'Basket' + arrIndex, sim.simx_opmode_blocking)
 
-    #Moving to desired Position Then Fake grasping
+    # Moving to position (on top of cup then down)
     mL.move_L(clientid, g.target, g.b1_return_pos, g.kFinal)
+    time.sleep(0.5)
+    mL.move_L(clientid, g.target, g.b2_return_pos, g.kFinal)
     time.sleep(2)
-    #sim.simxSetObjectParent(clientid, cupH, g.connector, True, sim.simx_opmode_blocking)
+    sim.simxSetObjectParent(clientid, cupH, g.connector, True, sim.simx_opmode_blocking)
 
-    #Closing gripper
+    # Closing gripper
     grip.closeGripper(clientid)
     time.sleep(1)
+
+    # Moving object Up
+    mL.move_L(clientid, g.target, g.b1_return_pos, g.kFinal)
+    time.sleep(2)
+    sim.simxSetObjectParent(clientid, cupH, -1, True, sim.simx_opmode_blocking)
+    grip.gripperFunction(clientid, 0, g.j1, g.j2, g.p1, g.p2)
+
+
 
 ############################# Python Script ###############################
 
