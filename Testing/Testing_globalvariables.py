@@ -52,8 +52,8 @@ basket_spawn = [0.25, 0.875, 0.765] #[x, y, z]
 #Basket-returning coordinates
 b1_return_pos = [0.25, 0.775, 0.965, 0, 0, 0]
 b2_return_pos = [0.25, 0.775, 0.765, 0, 0, 0]
-b3_return_pos = [0.25, 0.775, 0.765, 0, 0, 0]
-b4_return_pos = [0.25, 0.775, 0.765, 0, 0, 0]
+b3_return_pos = [0.25, 0.675, 0.965, 0, 0, 0]
+b4_return_pos = [0.25, 0.675, 0.765, 0, 0, 0]
 
 #Basket-moving coordinates for basket 1
 b1_int_pos = [0.15, 0.775, 0.765, 0, 0, 0]

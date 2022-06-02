@@ -19,6 +19,7 @@ def function():
     initCups() #Spawning a non-dynamic basket to the 'batter and breading machine' platform
 
     grabCupFunc(g.clientID, 1, "")  # Grab Cup "" from its position
+    placeCupFunc(g.clientID, 1, "") # Place Cup "" from its position
 
     """
     moveBasketFunc(g.clientID, 1, "") #Move basket from conveyor -> table x
@@ -35,7 +36,7 @@ def initCups():
 
 
 def grabCupFunc(clientid, targetPosition, arrIndex):
-    errorCode, cupH = sim.simxGetObjectHandle(g.clientID, 'Basket' + arrIndex, sim.simx_opmode_blocking)
+    errorCode, cupH = sim.simxGetObjectHandle(g.clientID, 'Cup' + arrIndex, sim.simx_opmode_blocking)
 
     # Moving to position (on top of cup then down)
     mL.move_L(clientid, g.target, g.b1_return_pos, g.kFinal)
@@ -51,9 +52,25 @@ def grabCupFunc(clientid, targetPosition, arrIndex):
     # Moving object Up
     mL.move_L(clientid, g.target, g.b1_return_pos, g.kFinal)
     time.sleep(2)
-    sim.simxSetObjectParent(clientid, cupH, -1, True, sim.simx_opmode_blocking)
-    grip.gripperFunction(clientid, 0, g.j1, g.j2, g.p1, g.p2)
 
+def placeCupFunc(clientid, targetPosition, arrIndex):
+    errorCode, cupH = sim.simxGetObjectHandle(g.clientID, 'Cup' + arrIndex, sim.simx_opmode_blocking)
+
+    # Moving to position (on top of cup then down)
+    mL.move_L(clientid, g.target, g.b3_return_pos, g.kFinal)
+    time.sleep(0.5)
+    mL.move_L(clientid, g.target, g.b4_return_pos, g.kFinal)
+    time.sleep(2)
+    sim.simxSetObjectParent(clientid, cupH, -1, True, sim.simx_opmode_blocking)
+
+
+    # Open gripper
+    grip.openGripper(clientid)
+    time.sleep(1)
+
+    # Moving object Up
+    mL.move_L(clientid, g.target, g.b3_return_pos, g.kFinal)
+    time.sleep(2)
 
 
 ############################# Python Script ###############################
