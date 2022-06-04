@@ -49,11 +49,14 @@ returnCode, orient = sim.simxGetObjectOrientation(clientID, target, -1, sim.simx
 initial_pos = [0.275, 0.505, 0.87, 0, 0, 0] #[x, y, z, alpha, beta, gamma]
 basket_spawn = [0.25, 0.875, 0.765] #[x, y, z]
 
-#Basket-returning coordinates
+#Basket-returning coordinates IN REAL WORLD COORDINATES - Remember to add wait call after each moveL
 b1_return_pos = [0.25, 0.775, 0.965, 0, 0, 0]
-b2_return_pos = [0.25, 0.775, 0.765, 0, 0, 0]
+b2_return_pos = [0.25, 0.775, 0.89, 0, 0, 0]
 b3_return_pos = [0.25, 0.675, 0.965, 0, 0, 0]
-b4_return_pos = [0.25, 0.675, 0.765, 0, 0, 0]
+b4_return_pos = [0.25, 0.675, 0.89, 0, 0, 0]
+b5_return_pos = [0.25, 0.675, 0.965, 0, 0, PI/2]
+b6_return_pos = [0.25, 0.675, 1, 0, 0, PI]# in radians
+
 
 #Basket-moving coordinates for basket 1
 b1_int_pos = [0.15, 0.775, 0.765, 0, 0, 0]

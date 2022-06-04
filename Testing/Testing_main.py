@@ -61,7 +61,7 @@ def placeCupFunc(clientid, targetPosition, arrIndex):
     time.sleep(0.5)
     mL.move_L(clientid, g.target, g.b4_return_pos, g.kFinal)
     time.sleep(2)
-    sim.simxSetObjectParent(clientid, cupH, -1, True, sim.simx_opmode_blocking)
+    sim.simxSetObjectParent(clientid, cupH, -1, True, sim.simx_opmode_blocking) #Resets Cup Parent to the Scene-"No longer grasping"
 
 
     # Open gripper
@@ -69,6 +69,15 @@ def placeCupFunc(clientid, targetPosition, arrIndex):
     time.sleep(1)
 
     # Moving object Up
+    mL.move_L(clientid, g.target, g.b3_return_pos, g.kFinal)
+    time.sleep(2)
+
+    #Rotating Gripper
+    # NOTE: CAN ONLY ROTATE GRIPPER IF THERE IS ALSO A TRANSLATION (X,Y,Z) - Need To Fix moveL function
+    mL.move_L(clientid, g.target, g.b6_return_pos, g.kFinal)
+    time.sleep(2)
+    mL.move_L(clientid, g.target, g.b5_return_pos, g.kFinal)
+    time.sleep(2)
     mL.move_L(clientid, g.target, g.b3_return_pos, g.kFinal)
     time.sleep(2)
 
